@@ -1,0 +1,52 @@
+{% extends 'accounts/base.html' %} 
+{% block content %} 
+<h2>{{ book.title }}</h2> 
+<table style="width: 100%; margin: 20px 0;"> 
+ <tr> 
+ <td style="padding: 10px; font-weight: bold; width: 200px;">Author:</td>  <td style="padding: 10px;">{{ book.author }}</td> 
+ </tr> 
+ <tr style="background: #f4f4f4;"> 
+ <td style="padding: 10px; font-weight: bold;">ISBN:</td>  <td style="padding: 10px;">{{ book.isbn }}</td> 
+ </tr> 
+ <tr> 
+ <td style="padding: 10px; font-weight: bold;">Publisher:</td>  <td style="padding: 10px;">{{ book.publisher|default:"N/A" }}</td>  </tr> 
+ <tr style="background: #f4f4f4;"> 
+ <td style="padding: 10px; font-weight: bold;">Publication Year:</td>  <td style="padding: 10px;">{{ book.publication_year }}</td>  </tr> 
+ <tr> 
+ <td style="padding: 10px; font-weight: bold;">Category:</td>  <td style="padding: 10px;">{{ book.get_category_display }}</td>  </tr> 
+ <tr style="background: #f4f4f4;"> 
+ <td style="padding: 10px; font-weight: bold;">Total Copies:</td>  <td style="padding: 10px;">{{ book.total_copies }}</td>  </tr> 
+ <tr> 
+ <td style="padding: 10px; font-weight: bold;">Available Copies:</td>  <td style="padding: 10px;"> 
+ {{ book.available_copies }} 
+ {% if book.is_available %} 
+ <span style="color: green;">(Available)</span> 
+ {% else %} 
+ <span style="color: red;">(Not Available)</span> 
+ {% endif %} 
+ </td> 
+ </tr> 
+ {% if book.description %} 
+ <tr style="background: #f4f4f4;"> 
+ <td style="padding: 10px; font-weight: bold; vertical-align: top;">  Description: 
+ </td> 
+ <td style="padding: 10px;">{{ book.description }}</td> 
+ </tr> 
+ {% endif %} 
+</table> 
+{% if user.is_librarian %} 
+<div style="margin-top: 20px;"> 
+ <a href="{% url 'book_update' book.pk %}"  
+ style="padding: 10px 20px; background: #f39c12; color: white;   text-decoration: none; border-radius: 4px; margin-right: 10px;">  Edit Book 
+ </a> 
+ <a href="{% url 'book_delete' book.pk %}"  
+ style="padding: 10px 20px; background: #e74c3c; color: white;   text-decoration: none; border-radius: 4px;"> 
+ Delete Book 
+ </a> 
+</div> 
+{% endif %} 
+<div style="margin-top: 20px;"> 
+ <a href="{% url 'book_list' %}" style="color: #3498db;">
+ ← Back to Book List  </a> 
+</div> 
+{% endblock %}

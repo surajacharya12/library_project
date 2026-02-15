@@ -1,0 +1,66 @@
+{% extends 'accounts/base.html' %} {% block content %}
+<div style="display: flex; justify-content: space-between; margin-bottom: 20px">
+  <h2>Books Library</h2>
+  <a
+    href="{% url 'book_create' %}"
+    style="
+      padding: 10px 20px;
+      background: #3498db;
+      color: white;
+      text-decoration: none;
+      border-radius: 4px;
+    "
+  >
+    Add New Book
+  </a>
+</div>
+{% if books %}
+<table style="width: 100%; border-collapse: collapse">
+  <thead style="background: #34495e; color: white">
+    <tr>
+      <th style="padding: 12px; text-align: left">Title</th>
+      <th style="padding: 12px; text-align: left">Author</th>
+      <th style="padding: 12px; text-align: left">Category</th>
+      <th style="padding: 12px; text-align: center">Available</th>
+      <th style="padding: 12px; text-align: center">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for book in books %}
+    <tr style="border-bottom: 1px solid #ddd">
+      <td style="padding: 12px">{{ book.title }}</td>
+      <td style="padding: 12px">{{ book.author }}</td>
+      <td style="padding: 12px">{{ book.get_category_display }}</td>
+      <td style="padding: 12px; text-align: center">
+        {{ book.available_copies }}/{{ book.total_copies }}
+      </td>
+      <td style="padding: 12px; text-align: center">
+        <a
+          href="{% url 'book_detail' book.pk %}"
+          style="color: #3498db; margin: 0 5px"
+          >View</a
+        >
+        <a
+          href="{% url 'book_update' book.pk %}"
+          style="color: #f39c12; margin: 0 5px"
+          >Edit</a
+        >
+        <a
+          href="{% url 'book_delete' book.pk %}"
+          style="color: #e74c3c; margin: 0 5px"
+          >Delete</a
+        >
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% else %}
+<p>No books in the library yet. Add some books to get started!</p>
+{% endif %}
+<div style="margin-top: 20px">
+  <a href="{% url 'librarian_dashboard' %}" style="color: #3498db">
+    ← Back to Dashboard
+  </a>
+</div>
+{% endblock %}

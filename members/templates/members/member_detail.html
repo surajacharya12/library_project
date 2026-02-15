@@ -1,0 +1,58 @@
+{% extends 'accounts/base.html' %} 
+{% block content %} 
+<h2>Member Details: {{ member.user.get_full_name }}</h2> 
+<table style="width: 100%; margin: 20px 0;"> 
+ <tr> 
+ <td style="padding: 10px; font-weight: bold; width: 200px;">Member ID:</td>  
+ <td style="padding: 10px;">{{ member.member_id }}</td> 
+ </tr> 
+ <tr style="background: #f4f4f4;"> 
+ <td style="padding: 10px; font-weight: bold;">Username:</td>  
+ <td style="padding: 10px;">{{ member.user.username }}</td> 
+ </tr> 
+ <tr> 
+ <td style="padding: 10px; font-weight: bold;">Email:</td>  
+ <td style="padding: 10px;">{{ member.user.email }}</td> 
+ </tr> 
+ <tr style="background: #f4f4f4;"> 
+ <td style="padding: 10px; font-weight: bold;">Phone Number:</td>  
+ <td style="padding: 10px;">{{ member.phone_number }}</td> 
+ </tr> 
+ <tr> 
+ <td style="padding: 10px; font-weight: bold;">Address:</td>  
+ <td style="padding: 10px;">{{ member.address }}</td> 
+ </tr> 
+ <tr style="background: #f4f4f4;"> 
+ <td style="padding: 10px; font-weight: bold;">Date of Birth:</td>  
+ <td style="padding: 10px;">{{ member.date_of_birth }}</td> 
+ </tr> 
+ <tr> 
+ <td style="padding: 10px; font-weight: bold;">Membership Date:</td>  
+ <td style="padding: 10px;">{{ member.membership_date }}</td> 
+ </tr> 
+ <tr style="background: #f4f4f4;"> 
+ <td style="padding: 10px; font-weight: bold;">Status:</td>  
+ <td style="padding: 10px;"> 
+ {% if member.is_active %} 
+ <span style="color: green;">Active</span> 
+ {% else %} 
+ <span style="color: red;">Inactive</span> 
+ {% endif %} 
+ </td> 
+ </tr> 
+</table> 
+<div style="margin-top: 20px;"> 
+ <a href="{% url 'member_update' member.pk %}"  
+ style="padding: 10px 20px; background: #f39c12; color: white;   text-decoration: none; border-radius: 4px; margin-right: 10px;">  
+ Edit Member 
+ </a> 
+ <a href="{% url 'member_delete' member.pk %}"  
+ style="padding: 10px 20px; background: #e74c3c; color: white;   text-decoration: none; border-radius: 4px;"> 
+ Delete Member 
+ </a> 
+</div> 
+<div style="margin-top: 20px;"> 
+ <a href="{% url 'member_list' %}" style="color: #3498db;">  ← Back to Member List 
+ </a> 
+</div> 
+{% endblock %}
