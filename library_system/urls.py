@@ -8,5 +8,6 @@ urlpatterns = [
     path('accounts/', include('accounts.urls')),
     path('books/', include('books.urls')), 
     path('members/', include('members.urls')), 
+    path('dispatch/', include('dispatch.urls')), 
     path('', lambda request: redirect('login')),  # Redirect root to login
 ]

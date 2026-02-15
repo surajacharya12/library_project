@@ -1,0 +1,41 @@
+{% extends 'accounts/base.html' %} 
+{% block content %} 
+<h2>Return Book</h2> 
+<div style="background: #e8f4fd; padding: 20px; border-radius: 4px; margin-bottom: 20px;"> 
+ <p><strong>Book:</strong> {{ borrow_record.book.title }}</p> 
+ <p><strong>Member:</strong> {{ borrow_record.member.user.get_full_name }} ({{ borrow_record.member.member_id }})</p> 
+ <p><strong>Borrowed On:</strong> {{ borrow_record.borrow_date }}</p> 
+ <p><strong>Due Date:</strong> {{ borrow_record.due_date }}</p> 
+</div> 
+<form method="post" style="max-width: 600px;"> 
+ {% csrf_token %} 
+ {% for field in form %} 
+  <div style="margin-bottom: 15px;"> 
+  <label style="display: block; margin-bottom: 5px; font-weight: bold;">  
+  {{ field.label }}: 
+  </label> 
+  {{ field }} 
+  {% if field.errors %} 
+   <div style="color: red; font-size: 14px;">{{ field.errors }}</div> 
+  {% endif %} 
+  </div> 
+ {% endfor %} 
+  
+ <button type="submit"  
+ style="padding: 10px 20px; background: #27ae60; color: white;   border: none; border-radius: 4px; cursor: pointer;">  
+ Process Return 
+ </button> 
+ <a href="{% url 'borrow_list' %}"  
+ style="padding: 10px 20px; background: #95a5a6; color: white;   text-decoration: none; border-radius: 4px; margin-left: 10px;">  
+ Cancel 
+ </a> 
+</form> 
+<style> 
+ input[type="date"], textarea { 
+ width: 100%; 
+ padding: 8px; 
+ border: 1px solid #ddd; 
+ border-radius: 4px; 
+ } 
+</style> 
+{% endblock %}

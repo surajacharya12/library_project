@@ -1,0 +1,80 @@
+{% extends 'accounts/base.html' %} 
+{% block content %} 
+<div style="display: flex; justify-content: space-between; margin-bottom: 20px;">  
+ <h2>Book Dispatch Management</h2> 
+ <a href="{% url 'borrow_book' %}"  
+ style="padding: 10px 20px; background: #3498db; color: white;   text-decoration: none; border-radius: 4px;"> 
+ Issue New Book 
+ </a> 
+</div> 
+<h3>Active Borrows</h3> 
+{% if active_borrows %} 
+<table style="width: 100%; border-collapse: collapse; margin-bottom: 30px;"> 
+ <thead style="background: #34495e; color: white;"> 
+ <tr> 
+ <th style="padding: 12px; text-align: left;">Book</th>  
+ <th style="padding: 12px; text-align: left;">Member</th>  
+ <th style="padding: 12px; text-align: center;">Due Date</th>  
+ <th style="padding: 12px; text-align: center;">Status</th>  
+ <th style="padding: 12px; text-align: center;">Actions</th>  
+ </tr> 
+ </thead> 
+ <tbody> 
+ {% for record in active_borrows %} 
+ <tr style="border-bottom: 1px solid #ddd;"> 
+ <td style="padding: 12px;">{{ record.book.title }}</td> 
+ <td style="padding: 12px;">{{ record.member.member_id }} ({{ record.member.user.get_full_name }})</td> 
+ <td style="padding: 12px; text-align: center;">{{ record.due_date }}</td> 
+ <td style="padding: 12px; text-align: center;"> 
+ {% if record.status == 'overdue' %} 
+ <span style="color: red; font-weight: bold;">Overdue</span> 
+ {% else %} 
+ <span style="color: green;">Borrowed</span> 
+ {% endif %} 
+ </td> 
+ <td style="padding: 12px; text-align: center;"> 
+ <a href="{% url 'return_book' record.pk %}"  
+ style="color: #27ae60; margin: 0 5px;">Return</a>  
+ <a href="{% url 'borrow_detail' record.pk %}"  
+ style="color: #3498db; margin: 0 5px;">View</a>  
+ </td> 
+ </tr> 
+ {% endfor %} 
+ </tbody> 
+</table> 
+{% else %} 
+<p>No active borrows.</p> 
+{% endif %} 
+<h3>Return History</h3> 
+{% if returned_borrows %} 
+<table style="width: 100%; border-collapse: collapse;"> 
+ <thead style="background: #95a5a6; color: white;"> 
+ <tr> 
+ <th style="padding: 12px; text-align: left;">Book</th>  
+ <th style="padding: 12px; text-align: left;">Member</th>  
+ <th style="padding: 12px; text-align: center;">Returned On</th>  
+ <th style="padding: 12px; text-align: center;">Actions</th>  
+ </tr> 
+ </thead> 
+ <tbody> 
+ {% for record in returned_borrows %} 
+ <tr style="border-bottom: 1px solid #ddd;"> 
+ <td style="padding: 12px;">{{ record.book.title }}</td> 
+ <td style="padding: 12px;">{{ record.member.member_id }}</td> 
+ <td style="padding: 12px; text-align: center;">{{ record.return_date }}</td> 
+ <td style="padding: 12px; text-align: center;"> 
+ <a href="{% url 'borrow_detail' record.pk %}"  
+ style="color: #3498db; margin: 0 5px;">View</a>  
+ </td> 
+ </tr> 
+ {% endfor %} 
+ </tbody> 
+</table> 
+{% else %} 
+<p>No return history.</p> 
+{% endif %} 
+<div style="margin-top: 20px;"> 
+ <a href="{% url 'librarian_dashboard' %}" style="color: #3498db;">  ← Back to Dashboard 
+ </a> 
+</div> 
+{% endblock %}

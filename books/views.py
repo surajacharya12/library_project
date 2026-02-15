@@ -1,8 +1,10 @@
 from django.shortcuts import render, redirect, get_object_or_404 
 from django.contrib.auth.decorators import login_required, user_passes_test 
 from django.contrib import messages 
+from django.db.models import Q
 from .models import Book 
 from .forms import BookForm 
+from dispatch.models import BorrowRecord
 def is_librarian(user): 
  return user.is_authenticated and user.user_type == 'librarian' 
 @login_required 
