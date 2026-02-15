@@ -1,13 +1,16 @@
 
 from django.contrib import admin
 from django.urls import path, include
-from django.shortcuts import redirect
+from django.shortcuts import render, redirect 
 
-urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('accounts/', include('accounts.urls')),
+def home(request): 
+    return render(request, 'accounts/home.html') 
+
+urlpatterns = [ 
+    path('admin/', admin.site.urls), 
+    path('accounts/', include('accounts.urls')), 
     path('books/', include('books.urls')), 
     path('members/', include('members.urls')), 
     path('dispatch/', include('dispatch.urls')), 
-    path('', lambda request: redirect('login')),  # Redirect root to login
+    path('', home, name='home'), 
 ]

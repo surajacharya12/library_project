@@ -1,0 +1,76 @@
+{% extends 'accounts/base.html' %} 
+{% block content %} 
+<h2>My Borrowed Books</h2> 
+<h3 style="margin-top: 30px; color: #2c3e50;">Currently Borrowed</h3> 
+{% if borrowed %} 
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0;">  
+ <thead style="background: #34495e; color: white;"> 
+ <tr> 
+ <th style="padding: 12px; text-align: left;">Book</th>  
+ <th style="padding: 12px; text-align: left;">Author</th>  
+ <th style="padding: 12px; text-align: center;">Borrowed</th>  
+ <th style="padding: 12px; text-align: center;">Due Date</th>  
+ <th style="padding: 12px; text-align: center;">Status</th>  
+ </tr> 
+ </thead> 
+ <tbody> 
+ {% for record in borrowed %} 
+ <tr style="border-bottom: 1px solid #ddd;"> 
+ <td style="padding: 12px;">{{ record.book.title }}</td>  
+ <td style="padding: 12px;">{{ record.book.author }}</td>  
+ <td style="padding: 12px; text-align: center;"> 
+ {{ record.borrow_date|date:"M d, Y" }} 
+ </td> 
+ <td style="padding: 12px; text-align: center;"> 
+ {{ record.due_date|date:"M d, Y" }} 
+ </td> 
+ <td style="padding: 12px; text-align: center;"> 
+ {% if record.is_overdue %} 
+ <span style="color: #e74c3c; font-weight: bold;">Overdue</span>  
+ {% else %} 
+ <span style="color: #27ae60;">On Time</span> 
+ {% endif %} 
+ </td> 
+ </tr> 
+ {% endfor %} 
+ </tbody> 
+</table> 
+{% else %} 
+<p style="color: #7f8c8d;">You don't have any books borrowed currently.</p> 
+{% endif %} 
+<h3 style="margin-top: 40px; color: #2c3e50;">Borrowing History</h3> 
+{% if history %} 
+<table style="width: 100%; border-collapse: collapse; margin: 20px 0;">  
+ <thead style="background: #95a5a6; color: white;"> 
+ <tr> 
+ <th style="padding: 12px; text-align: left;">Book</th>  
+ <th style="padding: 12px; text-align: center;">Borrowed</th>  
+ <th style="padding: 12px; text-align: center;">Returned</th>  
+ <th style="padding: 12px; text-align: center;">Days</th>  
+ </tr> 
+ </thead> 
+ <tbody> 
+ {% for record in history %} 
+ <tr style="border-bottom: 1px solid #ddd;"> 
+ <td style="padding: 12px;">{{ record.book.title }}</td>  
+ <td style="padding: 12px; text-align: center;"> 
+ {{ record.borrow_date|date:"M d, Y" }} 
+ </td> 
+ <td style="padding: 12px; text-align: center;"> 
+ {{ record.return_date|date:"M d, Y" }} 
+ </td> 
+ <td style="padding: 12px; text-align: center;"> 
+ {{ record.days_borrowed }} 
+ </td> 
+ </tr> 
+ {% endfor %} 
+ </tbody> 
+</table> 
+{% else %} 
+<p style="color: #7f8c8d;">No borrowing history yet.</p> 
+{% endif %} 
+<div style="margin-top: 30px;"> 
+ <a href="{% url 'member_dashboard' %}" style="color: #3498db;">  ← Back to Dashboard 
+ </a> 
+</div> 
+{% endblock %}
