@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'accounts', 
     'books', 
     'members', 
+    'dispatch', 
 ]
 
 MIDDLEWARE = [
