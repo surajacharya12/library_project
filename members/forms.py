@@ -19,8 +19,16 @@ class MemberRegistrationForm(forms.ModelForm):
   'date_of_birth': forms.DateInput(attrs={'type': 'date'}),  
   'address': forms.Textarea(attrs={'rows': 3}), 
   } 
-  
+ 
+ def clean_username(self): 
+  """Validate that the username is unique."""
+  username = self.cleaned_data.get('username') 
+  if User.objects.filter(username=username).exists(): 
+   raise forms.ValidationError("Username already exists. Please choose a different one.") 
+  return username
+
  def clean(self): 
+  # Standard clean logic to ensure passwords match
   cleaned_data = super().clean() 
   password = cleaned_data.get('password') 
   confirm_password = cleaned_data.get('confirm_password')   
